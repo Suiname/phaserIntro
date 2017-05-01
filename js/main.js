@@ -42,12 +42,25 @@ const GameState = {
         this.rightArrow = this.game.add.sprite(580, this.game.world.centerY, 'arrow');
         this.rightArrow.anchor.setTo(0.5);
         this.rightArrow.customParams = { direction: 1 };
-        
+        this.rightArrow.inputEnabled = true;
+        this.rightArrow.input.pixelPefectClick = true;
+        this.rightArrow.events.onInputDown.add(this.switchAnimal, this);
     },
     update() {
     },
     switchAnimal(sprite, event) {
-        console.log('left arrow');
+        console.log('arrow');
+        let newAnimal, endX;
+        if (sprite.customParams.direction > 0) {
+            newAnimal = this.animals.next();
+            endX = 640 + this.currentAnimal.width/2;
+        } else {
+            newAnimal = this.animals.previous();
+            endX = -this.currentAnimal.width/2;
+        }
+        this.currentAnimal.x = endX;
+        newAnimal.x = this.game.world.centerX;
+        this.currentAnimal = newAnimal;
     },
     animateAnimal(sprite, event) {
         console.log('animate animal');
