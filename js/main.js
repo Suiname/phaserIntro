@@ -3,12 +3,26 @@ const GameState = {
         this.load.image('background', 'assets/images/background.png');
         this.load.image('chicken', 'assets/images/chicken.png');
         this.load.image('arrow', 'assets/images/arrow.png');
+        this.load.image('horse', 'assets/images/horse.png');
+
     },
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
         this.background = this.game.add.sprite(0, 0, 'background');
+
+        const animalData = [
+            { key: 'chicken', text: 'CHICKEN' },
+            { key: 'horse', text: 'HORSE' },
+        ];
+
+        this.animals = this.game.add.group();
+
+        animalData.forEach((animal) => {
+            this.animals.create(200, this.game.world.centerY, animal.key);
+        })
+
         this.chicken = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'chicken');
         this.chicken.anchor.setTo(0.5, 0.5);
         this.chicken.scale.setTo(2);
