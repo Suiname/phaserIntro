@@ -19,16 +19,17 @@ const GameState = {
 
         this.animals = this.game.add.group();
 
-        animalData.forEach((animal) => {
-            this.animals.create(200, this.game.world.centerY, animal.key);
-        })
+        animalData.forEach((element) => {
+            let animal = this.animals.create(-1000, this.game.world.centerY, element.key);
+            animal.customParams = { text: element.text };
+            animal.anchor.setTo(0.5);
+            animal.inputEnabled = true;
+            animal.input.pixelPefectClick = true;
+            animal.events.onInputDown.add(this.animateAnimal, this);
+        });
 
-        this.chicken = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'chicken');
-        this.chicken.anchor.setTo(0.5, 0.5);
-        this.chicken.scale.setTo(2);
-        this.chicken.inputEnabled = true;
-        this.chicken.input.pixelPefectClick = true;
-        this.chicken.events.onInputDown.add(this.animateAnimal, this);
+        this.currentAnimal = this.animals.next();
+        this.currentAnimal.position.set(this.game.world.centerX, this.game.world.centerY);
 
         this.leftArrow = this.game.add.sprite(60, this.game.world.centerY, 'arrow');
         this.leftArrow.anchor.setTo(0.5);
@@ -44,7 +45,6 @@ const GameState = {
         
     },
     update() {
-        this.chicken.angle += 0.5;
     },
     switchAnimal(sprite, event) {
         console.log('left arrow');
