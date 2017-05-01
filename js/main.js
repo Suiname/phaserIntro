@@ -4,6 +4,9 @@ const GameState = {
         this.load.image('chicken', 'assets/images/chicken.png');
     },
     create() {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
         this.background = this.game.add.sprite(0, 0, 'background');
         this.chicken = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'chicken');
         this.chicken.anchor.setTo(0.5, 0.5);
