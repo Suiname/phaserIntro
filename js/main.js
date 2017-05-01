@@ -8,9 +8,10 @@ const GameState = {
         this.chicken = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'chicken');
         this.chicken.anchor.setTo(0.5, 0.5);
         this.chicken.scale.setTo(2);
+        
     },
     update() {
-
+        this.chicken.angle += 0.5;
     }
 };
 
