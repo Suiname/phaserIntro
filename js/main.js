@@ -49,7 +49,10 @@ const GameState = {
     update() {
     },
     switchAnimal(sprite, event) {
-        console.log('arrow');
+        if(this.isMoving) {
+            return false;
+        }
+        this.isMoving = true;
         let newAnimal, endX;
         if (sprite.customParams.direction > 0) {
             newAnimal = this.animals.next();
@@ -66,6 +69,9 @@ const GameState = {
 
         const currentAnimalMovement = this.game.add.tween(this.currentAnimal);
         currentAnimalMovement.to({x: endX}, 1000);
+        newAnimalMovement.onComplete.add(() => {
+            this.isMoving = false;
+        }, this);
         currentAnimalMovement.start();
         this.currentAnimal = newAnimal;
     },
