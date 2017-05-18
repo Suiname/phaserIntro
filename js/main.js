@@ -5,7 +5,8 @@ const GameState = {
         this.load.spritesheet('chicken', 'assets/images/chickenSprite.png', 148, 110, 24);
         this.load.image('arrow', 'assets/images/arrow.png');
         this.load.spritesheet('horse', 'assets/images/horseSprite.png', 400, 248, 15);
-
+        this.load.audio('chickenSound', ['assets/sounds/chicken.ogg', 'assets/sounds/chicken.mp3']);
+        this.load.audio('horseSound', ['assets/sounds/horse.ogg', 'assets/sounds/horse.mp3']);
     },
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -14,15 +15,15 @@ const GameState = {
         this.background = this.game.add.sprite(0, 0, 'background');
 
         const animalData = [
-            { key: 'chicken', text: 'CHICKEN' },
-            { key: 'horse', text: 'HORSE' },
+            { key: 'chicken', text: 'CHICKEN', audio: 'chickenSound' },
+            { key: 'horse', text: 'HORSE', audio: 'horseSound' },
         ];
 
         this.animals = this.game.add.group();
 
         animalData.forEach((element) => {
             let animal = this.animals.create(-1000, this.game.world.centerY, element.key, 0);
-            animal.customParams = { text: element.text };
+            animal.customParams = { text: element.text, sound: this.game.add.audio(element.audio) };
             animal.anchor.setTo(0.5);
             animal.animations.add('animate', [0,1,2,3], 3, false);
             animal.inputEnabled = true;
@@ -79,6 +80,7 @@ const GameState = {
     },
     animateAnimal(sprite, event) {
         sprite.play('animate');
+        sprite.customParams.sound.play();
     }
 };
 
