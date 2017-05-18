@@ -1,9 +1,10 @@
 const GameState = {
     preload() {
         this.load.image('background', 'assets/images/background.png');
-        this.load.image('chicken', 'assets/images/chicken.png');
+        // this.load.image('chicken', 'assets/images/chicken.png');
+        this.load.spritesheet('chicken', 'assets/images/chickenSprite.png', 148, 110, 24);
         this.load.image('arrow', 'assets/images/arrow.png');
-        this.load.image('horse', 'assets/images/horse.png');
+        this.load.spritesheet('horse', 'assets/images/horseSprite.png', 400, 248, 15);
 
     },
     create() {
@@ -20,9 +21,10 @@ const GameState = {
         this.animals = this.game.add.group();
 
         animalData.forEach((element) => {
-            let animal = this.animals.create(-1000, this.game.world.centerY, element.key);
+            let animal = this.animals.create(-1000, this.game.world.centerY, element.key, 0);
             animal.customParams = { text: element.text };
             animal.anchor.setTo(0.5);
+            animal.animations.add('animate', [0,1,2,3], 3, false);
             animal.inputEnabled = true;
             animal.input.pixelPefectClick = true;
             animal.events.onInputDown.add(this.animateAnimal, this);
@@ -76,7 +78,7 @@ const GameState = {
         this.currentAnimal = newAnimal;
     },
     animateAnimal(sprite, event) {
-        console.log('animate animal');
+        sprite.play('animate');
     }
 };
 
